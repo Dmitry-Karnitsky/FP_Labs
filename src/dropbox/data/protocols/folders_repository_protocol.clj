@@ -1,9 +1,10 @@
-(ns dropbox.data.protocols.folders-repository-protocol)
+(ns dropbox.data.protocols.folders-repository-protocol
+    (:refer-clojure :exclude [get update]))
 
 (defprotocol FoldersRepositoryProtocol
-    (get-all [this login])
+    (get-all [this username])
     (get [this id])
     (create [this folder])
     (update [this folder])
-    (delete [this id])
+    (delete [this folder])
 )

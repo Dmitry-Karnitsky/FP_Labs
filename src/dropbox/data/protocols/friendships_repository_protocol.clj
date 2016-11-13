@@ -1,4 +1,5 @@
-(ns dropbox.data.protocols.friendships-repository-protocol)
+(ns dropbox.data.protocols.friendships-repository-protocol
+    (:refer-clojure :exclude [get update]))
 
 (defprotocol FriendshipsRepositoryProtocol
     (get-all [this username])

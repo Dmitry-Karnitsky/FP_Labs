@@ -6,5 +6,5 @@
     (get [this id])
     (create [this file])
     (update [this file])
-    (delete [this id])
+    (delete [this file])
 )

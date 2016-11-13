@@ -2,7 +2,7 @@
     (:refer-clojure :exclude [get update]))
 
 (defprotocol UsersRepositoryProtocol
-    (get [this login])
+    (get [this username])
     (create [this user])
     (update [this user])
 )
