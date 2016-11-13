@@ -4,6 +4,7 @@
    ; Работа с маршрутами
    [compojure.core :refer [defroutes GET POST]]
    [compojure.route :as route]
+   [dropbox.infrastructure.converters :as conv]
 
    ; Контроллеры запросов
    [dropbox.controllers :as c]
@@ -11,8 +12,12 @@
    ; Отображение страниц
    [dropbox.views :as v]
 
+   [dropbox.config :as conf]
+   [dropbox.data.files-repository :as r]
    ; Функции для взаимодействия с БД
-   [dropbox.db :as db]))
+   [dropbox.data.db :as db]))
+
+(def repo (r/->FilesRepository conf/db-spec))
 
 ; Объявляем маршруты
 (defroutes dropbox-routes
@@ -71,8 +76,8 @@
   ; Главная страница приложения
   (GET "/"
        []
-       (let [notes (db/get-notes)]
-         (v/index notes)))
+       (let [notes (.get repo 1)]
+         (v/index [ notes ])))
 
   ; Ошибка 404
   (route/not-found "Ничего не найдено"))

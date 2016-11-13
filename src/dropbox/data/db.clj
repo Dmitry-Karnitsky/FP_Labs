@@ -1,30 +1,40 @@
-(ns dropbox.db
+(ns dropbox.data.db
   (:require
-
-   ; Непосредственно Monger
-  ;  [monger.joda-time] ; для добавления времени и даты
-  ;  [monger.core :as mg]
-  ;  [monger.collection :as m]
-  ;  [monger.operators :refer :all]
-
+    [clojure.java.jdbc :as jdbc],
+    [dropbox.data.db.db-spec :refer :all],
+    [dropbox.data.mappers.user-entity-mapper :refer :all],
    ; Время и дата
-   [joda-time :as t])
+    [joda-time :as t])
 
   ; Импортируем методы из Java библиотек
-  (:import org.bson.types.ObjectId
+  (:import org.bson.types.ObjectId 
            org.joda.time.DateTimeZone))
 
 ; Во избежание ошибок нужно указать часовой пояс
 (DateTimeZone/setDefault DateTimeZone/UTC)
 
+(def user-mapper (->UserMapper))
 
-(require '[clojure.java.jdbc :as jdbc])
-;; you can optionally specify :host and :port to override the defaults
-;; of "127.0.0.1" and 1433 respectively:
-(def db-spec {:classname "com.microsoft.jdbc.sqlserver.SQLServerDriver"
-               :subprotocol "sqlserver"
-               :subname "//localhost:1433;database=Dropbox;integratedSecurity=true"})
+; Приватная функция создания штампа даты и времени
+(defn- date-time
+  "Текущие дата и время"
+  [] 
+  (t/date-time))
 
+(defn get-notes
+  "Получить все заметки"
+  []
+
+  (let [ent (first (jdbc/query db-spec
+            ["SELECT UserId, Username, Password, RegisterDate FROM Users WHERE Username = ?", "user2"]
+                {:row-fn (fn [map] (.data->entity user-mapper map))}))
+        _ (println (.entity->data user-mapper ent))
+        _ (try 
+            (println (jdbc/query db-spec ["EXEC usp_CreateUser ?, ?" "newuser6" "newpassword"]))
+            (catch Exception e (println e)))
+       ]
+  )
+)
 
 
 ; ; Создадим переменную соединения с БД
@@ -33,11 +43,7 @@
 ;         {:keys [db]} (mg/connect-via-uri uri)]
 ;     db))
 
-; Приватная функция создания штампа даты и времени
-(defn- date-time
-  "Текущие дата и время"
-  []
-  (t/date-time))
+
 
 (defn remove-note
   "Удалить заметку по ее ObjectId"
@@ -88,21 +94,6 @@
   ;   (m/find-map-by-id db "notes" id)))
   (1))
 
-(defn get-notes
-  "Получить все заметки"
-  []
-
-  ; Find-maps возвращает все документы
-  ; из коллеции в виде hash-map
-  ; (m/find-maps db "notes"))
- 
-  ; (let [rows (jdbc/query db-spec
-  ;                      ["SELECT UserId, Username, Password FROM Users"])]
-  ; (doseq [row rows] (println (:userid row)))))
-
-  (jdbc/query db-spec ["SELECT * FROM [Users]"] 
-      {:row-fn (fn [row] (println row))}))
-
 (defn create-note
   "Создать заметку в БД"
 
@@ -124,3 +115,5 @@
   ;                          :_id object-id
   ;                          :created (date-time))))
                            )
+
+ 

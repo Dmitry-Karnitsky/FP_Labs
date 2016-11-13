@@ -5,7 +5,7 @@
    [ring.util.response :refer [redirect]]
 
    ; Функции для взаимодействия с БД
-   [dropbox.db :as db]))
+   [dropbox.data.db :as db]))
 
 (defn delete
   "Контроллер удаления заметки"

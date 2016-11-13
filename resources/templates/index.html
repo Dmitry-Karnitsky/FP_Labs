@@ -8,7 +8,7 @@
 
     {% for note in notes %}
     <li>
-        <h4><a href="/note/{{note._id}}">{{note.title}}</a></h4>
+        <h4><a href="/note/{{note._id}}">{{note.filename}}</a></h4>
         <small>{{note.created|format-datetime}}</small>
         <hr>
         <a href="/edit/{{note._id}}">Редактировать</a> | <a href="/delete/{{note._id}}">Удалить</a>
