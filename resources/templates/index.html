@@ -1,23 +1,23 @@
 {% extends "base.html" %}
 {% block content %}
 
-<h1>Заметки</h1>
+<h1>Files</h1>
 
-{% if notes %}
+{% if files %}
 <ul>
 
-    {% for note in notes %}
+    {% for file in files %}
     <li>
-        <h4><a href="/note/{{note._id}}">{{note.filename}}</a></h4>
-        <small>{{note.created|format-datetime}}</small>
+        <h4><a href="/files/{{file.id}}">{{file.filename}}</a></h4>
+        <small>{{file.create-date|format-datetime}}</small>
         <hr>
-        <a href="/edit/{{note._id}}">Редактировать</a> | <a href="/delete/{{note._id}}">Удалить</a>
+        <a href="/files/{{file.id}}">Info</a> | <a href="/files/delete/{{file.id}}">Delete</a>
     </li>
     {% endfor %}
 
 </ul>
 {% else %}
-<strong>Заметок еще нет</strong>
+<strong>No files</strong>
 {% endif %}
 
 {% endblock %}

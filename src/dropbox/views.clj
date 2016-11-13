@@ -21,7 +21,7 @@
 (defn format-date-and-time
   "Отформатировать дату и время"
   [date]
-  (let [formatter (t/formatter "yyyy-MM-dd в H:m:s" :date-time)]
+  (let [formatter (t/formatter "yyyy-MM-dd" :date-time)]
     (when date
       (t/print formatter date))))
 
@@ -74,14 +74,14 @@
 
 (defn index
   "Главная страница приложения. Список заметок"
-  [notes]
+  [files]
   (render "index.html"
 
           ; Передаем данные в шаблон
           ; Если notes пуст вернуть false
-          {:notes (if (not-empty notes)
+          {:files (if (not-empty files)
 
                     ; Давайте перевернем наши заметки
                     ; чтобы вверху были самые свежие из них
-                    (reverse notes)
+                    (reverse files)
                     false)}))

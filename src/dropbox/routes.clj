@@ -16,11 +16,12 @@
 
   (GET "/"
        []
-       (let [notes (.get-all repo 1)
-            _ (assoc (first notes) :filename "newfile")
-            _ (.update repo _)
-            _ (.delete repo (second notes))]
-         (v/index notes)))
+       (let [files (.get-all repo 1)]
+         (v/index files)))
 
-  ; Ошибка 404
+  (GET "/files/:id"
+      [id]
+      (let [files (.get-all repo id)]
+          (v/index files)))
+
   (route/not-found "Empty"))
