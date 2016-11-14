@@ -2,7 +2,7 @@
     (:refer-clojure :exclude [get update]))
 
 (defprotocol FriendshipsRepositoryProtocol
-    (get-all [this username])
+    (get-all [this user-id])
     (create [this friendship])
     (delete [this friendship])
 )

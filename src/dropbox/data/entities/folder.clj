@@ -2,8 +2,8 @@
 
 (defrecord Folder [
     id
-    foldername
-    is-private
-    is-root
+    folder-name
+    private?
+    root?
     create-date
     update-date])

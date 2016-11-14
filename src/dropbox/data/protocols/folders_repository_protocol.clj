@@ -2,7 +2,7 @@
     (:refer-clojure :exclude [get update]))
 
 (defprotocol FoldersRepositoryProtocol
-    (get-all [this username])
+    (get-all [this owner-id])
     (get [this id])
     (create [this folder])
     (update [this folder])
