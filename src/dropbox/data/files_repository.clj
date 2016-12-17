@@ -15,12 +15,12 @@
 
 	(get-all [this folder-id]
 		(jdbc/query db-spec
-			["SELECT FileId, FileName, FileBytes, CreateDate, IsPrivate, FolderId FROM Files WHERE FolderId = ?", folder-id]
+			["SELECT FileId, FileName, FileBytes FROM Files"]
 				{:row-fn (fn [data] (.data->entity file-mapper data))}))
 
 	(get [this id]
 		(jdbc/query db-spec
-			["SELECT FileId, FileName, FileBytes, CreateDate, IsPrivate, FolderId FROM Files WHERE FileId = ?", id]
+			["SELECT FileId, FileName, FileBytes FROM Files WHERE FileId = ?", id]
 				{:row-fn (fn [data] (.data->entity file-mapper data))
 				:result-set-fn first}))
 
