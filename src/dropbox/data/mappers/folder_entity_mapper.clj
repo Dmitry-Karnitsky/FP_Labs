@@ -13,6 +13,7 @@
             (:foldername row)
             (:isprivate row)
             (:isroot row)
+            (:ownerid row)
             (c/to-date-time (:createdate row))
             (c/to-date-time (:updatedate row))))
 
@@ -21,6 +22,7 @@
             :foldername (:folder-name entity)
             :isprivate (:private? entity)
             :isroot (:root? entity)
+            :ownerid (:ownerid entity)
             :createdate (c/to-sql-time (:create-date entity))
             :updatedate (c/to-sql-time (:update-date entity))))
 )

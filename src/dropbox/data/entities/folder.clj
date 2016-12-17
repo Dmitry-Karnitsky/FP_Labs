@@ -5,5 +5,6 @@
     folder-name
     private?
     root?
+    ownerid
     create-date
     update-date])
