@@ -1,9 +1,8 @@
 use Dropbox;
 
-delete from FoldersShares
+delete from FilesShares
 delete from Friendships
 delete from files
-delete from folders
 delete from users
 
 declare @i int = 0;
@@ -22,13 +21,6 @@ begin
 	set Username = Username + (select cast (@id as nvarchar(3))),
 		Password = Password + (select cast (@id as nvarchar(3)))
 	where UserId = @id
-
-	insert into Folders(FolderName, IsPrivate, IsRoot, OwnerId)
-	output inserted.FolderId into @idsTbl
-	values 
-		('Root folder for ' + (select cast(@id as nvarchar(3))), 1, 1, @id),
-		('Folder for ' + (select cast(@id as nvarchar(3))), 0, 0, @id),
-		('Folder for ' + (select cast(@id as nvarchar(3))), 1, 0, @id)
 	
 	declare @ii int = 0;
 	while (@ii < 10)
@@ -37,8 +29,8 @@ begin
 		from @idsTbl
 		order by newid()
 		
-		insert into Files(FileName, IsPrivate, FileBytes, FolderId)
-		values ('File from folder ' + (select cast(@id as nvarchar(3))), @id % 2, cast('filebytes' as varbinary(max)), @id)
+		insert into Files(FileName, FileBytes, OwnerId)
+		values ('File for user ' + (select cast(@id as nvarchar(3))), cast('filebytes' as varbinary(max)), @id)
 
 		set @ii = @ii + 1;
 	end
@@ -66,9 +58,9 @@ begin
 	select @id, id
 	from @idsTbl
 
-	insert into FoldersShares(FolderId, FriendshipId)
+	insert into FilesShares(FileId, FriendshipId)
 	select top 1
-		 (select top 1 folderid from Folders where OwnerId = @id and IsPrivate = 0)
+		 (select top 1 fileid from Files where OwnerId = @id)
 		,fs 
 	from @sharedTo
 
