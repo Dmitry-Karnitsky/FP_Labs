@@ -1,15 +1,11 @@
 (ns dropbox.routes.home
-  (:require
-   [compojure.core :refer [defroutes GET]]
-   [compojure.route :as route]
-   [dropbox.infrastructure.converters :as conv]
-   [dropbox.views :as v]
-   [dropbox.config :as conf]))
+  (:require [dropbox.layout :as layout]
+            [compojure.core :refer [defroutes GET]]
+            [ring.util.http-response :refer [ok]]
+            [clojure.java.io :as io]))
 
 (defn home-page []
   (layout/render "home.html"))
 
 (defroutes home-routes
-  (GET "/"
-        []
-        (home-page)))
+  (GET "/" [] (home-page)))

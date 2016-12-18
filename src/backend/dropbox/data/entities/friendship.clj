@@ -2,5 +2,5 @@
 
 (defrecord Friendship [
     id
-    username
-    friend-name])
+    user-id
+    friend-id])

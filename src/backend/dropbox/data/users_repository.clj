@@ -12,9 +12,9 @@
 (deftype UsersRepository [db-spec]
 	protocol/UsersRepositoryProtocol
 
-	(get [this username]
+	(get [this user-id]
 		(jdbc/query db-spec
-			["SELECT UserId, Username, Password, RegisterDate FROM Users WHERE Username = ?", username]
+			["SELECT UserId, Username, Password, RegisterDate FROM Users WHERE UserId = ?", user-id]
 				{:row-fn (fn [data] (.data->entity user-mapper data))
 				:result-set-fn first}))
 

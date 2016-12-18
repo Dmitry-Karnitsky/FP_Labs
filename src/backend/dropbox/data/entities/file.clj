@@ -4,6 +4,5 @@
     id
     filename
     content
-    private?
-    folder-id
+    owner-id
     create-date])
