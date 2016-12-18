@@ -8,9 +8,7 @@
             [dropbox.ajax :refer [load-interceptors!]]
             [ajax.core :as ajax]
             [dropbox.components.registration :as reg]
-            [dropbox.components.login :as l]
-            [dropbox.components.upload :as u]
-            [dropbox.components.gallery :as g])
+            [dropbox.components.login :as l])
   (:import goog.History))
 
 (defn nav-link [uri title page collapsed?]
@@ -81,7 +79,6 @@
 
 (def pages
   {:home    #'home-page
-   :gallery #'g/gallery-page
    :about   #'about-page})
 
 (defn modal []
@@ -99,9 +96,6 @@
 
 (secretary/defroute "/" []
                     (session/put! :page :home))
-(secretary/defroute "/gallery/:owner" [owner]
-                    (g/fetch-gallery-thumbs! owner)
-                    (session/put! :page :gallery))
 (secretary/defroute "/about" []
                     (session/put! :page :about))
 
