@@ -15,6 +15,11 @@
    (s/optional-key :message) String})
 
 (defapi service-routes
+    {:swagger {:ui "/swagger-ui"
+             :spec "/swagger.json"
+             :data {:info {:version "1.0.0"
+                           :title "Picture Gallery API"
+                           :description "Public Services"}}}}
   (POST "/register" req
         :body [user UserRegistration]
         :summary "register a new user"
@@ -32,5 +37,9 @@
   )
 
 (defapi restricted-service-routes
-
+  {:swagger {:ui "/swagger-ui-private"
+             :spec "/swagger-private.json"
+             :data {:info {:version "1.0.0"
+                           :title "Picture Gallery API"
+                           :description "Private Services"}}}}
   )
