@@ -1,4 +1,4 @@
-(ns picture-gallery.components.common
+(ns dropbox.components.common
   (:require [reagent.core :refer [atom]]
             [reagent.session :as session]))
 
