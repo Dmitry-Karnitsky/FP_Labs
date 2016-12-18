@@ -16,14 +16,14 @@
         (js/setTimeout #(session-timer) timeout-ms))
       (session/remove! :identity))))
 
-(defn encode-auth [user pass]
-  (->> (str user ":" pass) (b64/encodeString) (str "Basic ")))
+(defn encode-auth [user password]
+  (->> (str user ":" password) (b64/encodeString) (str "Basic ")))
 
 (defn login! [fields error]
-  (let [{:keys [id pass]} @fields]
+  (let [{:keys [id password]} @fields]
     (reset! error nil)
     (ajax/POST "/login"
-               {:headers       {"Authorization" (encode-auth (string/trim id) pass)}
+               {:headers       {"Authorization" (encode-auth (string/trim id) password)}
                 :handler       #(do
                                  (session/remove! :modal)
                                  (session/put! :identity id)
@@ -41,7 +41,7 @@
         [:div.well.well-sm
          [:strong "✱ required field"]]
         [c/text-input "name" :id "enter a user name" fields]
-        [c/password-input "password" :pass "enter a password" fields]
+        [c/password-input "password" :password "enter a password" fields]
         (when-let [error @error]
           [:div.alert.alert-danger error])]
        [:div
