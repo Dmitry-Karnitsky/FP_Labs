@@ -45,7 +45,7 @@
   :cljsbuild
     {:builds
     {:app
-      {:source-paths ["src/common" "src/fronend"]
+      {:source-paths ["src/common" "src/frontend"]
       :compiler
       {:output-to "target/cljsbuild/public/js/app.js"
         :output-dir "target/cljsbuild/public/js/out"
