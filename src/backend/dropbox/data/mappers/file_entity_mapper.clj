@@ -12,13 +12,13 @@
             (:fileid row)
             (:filename row)
             (:filebytes row)
-            (:ownerid row)
+            (:ownername row)
             (c/to-date-time (:createdate row))))
 
     (entity->data [this entity]
         (hash-map
             :filename (:filename entity)
             :filebytes (:content entity)
-            :ownerid (:owner-id entity)
+            :ownerid (:owner-name entity)
             :createdate (c/to-sql-time (:create-date entity))))
 )

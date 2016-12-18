@@ -16,7 +16,7 @@
         (.split ":"))))
 
 (defn authenticate [[id password]]
-  (when-let [user (us/get-by-id id)]
+  (when-let [user (us/get id)]
     (when (hashers/check password (:password user))
       id)))
 
@@ -26,7 +26,7 @@
         (response/ok)
         (assoc :session (assoc session :identity id)))
     (response/unauthorized {:result  :unauthorized
-                            :message "login failure"})))
+                            :message "Authentication failed."})))
 
 (defn logout! []
   (-> {:result :ok}

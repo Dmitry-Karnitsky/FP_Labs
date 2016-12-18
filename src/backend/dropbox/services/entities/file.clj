@@ -3,7 +3,6 @@
 (defrecord File [
     id
     filename
-    content
+    file-size
     create-date
-	owner-id
 	owner-name])

@@ -10,11 +10,11 @@
     (data->entity [this row]
         (f/->Friendship
             (:frienshipid row)
-            (:userid row)
-            (:friendid row)))
+            (:username row)
+            (:friendname row)))
 
     (entity->data [this entity]
         (hash-map
-            :userid (:user-id entity)
-            :friendid (:friend-id entity)))
+            :username (:user-name entity)
+            :friendname (:friend-name entity)))
 )

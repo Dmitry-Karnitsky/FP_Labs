@@ -12,9 +12,9 @@
 (deftype UsersRepository [db-spec]
 	protocol/UsersRepositoryProtocol
 
-	(get [this user-id]
+	(get [this user-name]
 		(jdbc/query db-spec
-			["SELECT UserId, Username, Password, RegisterDate FROM Users WHERE Username = ?", user-id]
+			["SELECT UserName, Password, RegisterDate FROM Users WHERE UserName = ?", user-name]
 				:row-fn (fn [data] (.data->entity user-mapper data))
 				:result-set-fn first))
 
@@ -22,5 +22,5 @@
 		(jdbc/insert! db-spec :Users (.entity->data user-mapper user)))
 
 	(update [this user]
-		(jdbc/update! db-spec :Users (.entity->data user-mapper user) ["Username = ?" (:id user)]))
+		(jdbc/update! db-spec :Users (.entity->data user-mapper user) ["UserName = ?" (:id user)]))
 )

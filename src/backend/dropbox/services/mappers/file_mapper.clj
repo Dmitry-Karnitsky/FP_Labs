@@ -11,7 +11,7 @@
         (:id business)
         (:filename business)
         (:content business)
-        (:owner-id business)
+        (:owner-name business)
         (:create-date business)))
 
 (defn raw->business
@@ -19,10 +19,9 @@
     (f/->File
         (:fileid raw)
         (:filename raw)
-        (:filebytes raw)
+        (alength (:filebytes raw))
         (c/to-date-time (:createdate raw))
-        (:ownerid raw)
-        (:username raw)))
+        (:ownername raw)))
 
 (defn business->map
     [business]
@@ -30,6 +29,5 @@
         :id (:id business)
         :filename (:filename business)
         :content (:content business)
-        :create-date (:create-date business)
-        :owner-id (:owner-id business)
-        :owner-name (:owner-name business)))
+        :owner-name (:owner-name business))
+        :create-date (:create-date business))

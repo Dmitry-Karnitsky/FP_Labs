@@ -10,7 +10,7 @@
 (def queryable (gen-repo/->GenericRepository conf/db-spec))
 
 (defn get-files
-	[user-id]
+	[user-name]
 	(map
 		mapper/raw->business
 		(.execute-select queryable
@@ -20,10 +20,12 @@
 				:FileName :f.FileName
 				:FileBytes :f.FileBytes
 				:CreateDate :f.CreateDate
-				:OwnerId :f.OwnerId
-				:UserName :u.Username})
-			(from :u :Users)
-			(join :f :Files (= :u.UserId :f.OwnerId))
-			(where ['= :f.OwnerId user-id])
+				:OwnerName :f.OwnerName})
+			(from :f :Files)
+			(where ['= :f.OwnerName user-name])
 			(order-by :f.FileName)))))
+
+(defn download
+	[req]
+	(println req))
 

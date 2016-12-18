@@ -8,23 +8,20 @@
 (defn reguser->business
     [reguser]
     (u/->User
-        nil
-        (:id reguser)
+        (:id reguser) ;;username
         (:password (update reguser :password hash/encrypt))
         (h/utc-now)))
 
 (defn business->data
     [business]
     (du/->User
-        (:id business)
-        (:username business)
+        (:user-name business)
         (:password business)
         (:register-date business)))
 
 (defn data->business
     [data]
     (u/->User
-        (:id data)
-        (:username data)
+        (:user-name data)
         (:password data)
         (:register-date data)))

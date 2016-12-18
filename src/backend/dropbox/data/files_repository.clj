@@ -15,14 +15,14 @@
 
 	(get-all [this owner-id]
 		(jdbc/query db-spec
-			["SELECT FileId, FileName, FileBytes, CreateDate, OwnerId FROM Files WHERE OwnerId = ?", owner-id]
-				{:row-fn (fn [data] (.data->entity file-mapper data))}))
+			["SELECT FileId, FileName, FileBytes, CreateDate, OwnerName FROM Files WHERE OwnerName = ?", owner-id]
+				:row-fn (fn [data] (.data->entity file-mapper data))))
 
 	(get [this id]
 		(jdbc/query db-spec
-			["SELECT FileId, FileName, FileBytes, CreateDate, OwnerId FROM Files WHERE FileId = ?", id]
-				{:row-fn (fn [data] (.data->entity file-mapper data))
-				:result-set-fn first}))
+			["SELECT FileId, FileName, FileBytes, CreateDate, OwnerName FROM Files WHERE FileId = ?", id]
+				:row-fn (fn [data] (.data->entity file-mapper data))
+				:result-set-fn first))
 
 	(create [this file]
 		(jdbc/insert! db-spec :Files (.entity->data file-mapper file)))

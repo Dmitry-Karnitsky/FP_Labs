@@ -1,15 +1,15 @@
-(ns dropbox.data.mappers.userfile-entity-mapper
+(ns dropbox.data.mappers.fileshare-entity-mapper
     (:require
         [dropbox.data.mappers.protocols.db-entity-mapper-protocol :as m]
-        [dropbox.data.entities.userfile :as f]
+        [dropbox.data.entities.fileshare :as f]
         [dropbox.infrastructure.converters :as c]))
 
-(deftype UserFileMapper []
+(deftype FileShareMapper []
     m/DbEntityMapperProtocol
 
     (data->entity [this row]
-        (f/->UserFile
-            (:userfileid row)
+        (f/->FileShare
+            (:fileshareid row)
             (:fileid row)
             (:friendshipid row)))
 

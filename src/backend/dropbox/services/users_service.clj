@@ -6,9 +6,9 @@
 
 (def users (users-repo/->UsersRepository conf/db-spec))
 
-(defn get-by-id
-	[user-id]
-	(mapper/data->business  (.get users user-id)))
+(defn get
+	[username]
+	(mapper/data->business  (.get users username)))
 
 (defn create-user
 	[user]

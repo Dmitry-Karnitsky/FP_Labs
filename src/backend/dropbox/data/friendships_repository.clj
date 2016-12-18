@@ -15,8 +15,8 @@
 
 	(get-all [this user-id]
 		(jdbc/query db-spec
-			["SELECT FriendshipId, UserId, FriendId FROM Friendship WHERE UserId = ?", user-id]
-				{:row-fn (fn [data] (.data->entity friendship-mapper data))}))
+			["SELECT FriendshipId, UserName, FriendName FROM Friendship WHERE UserName = ?", user-id]
+				:row-fn (fn [data] (.data->entity friendship-mapper data))))
 
 	(create [this friendship]
 		(jdbc/insert! db-spec :Friendships (.entity->data friendship-mapper friendship)))

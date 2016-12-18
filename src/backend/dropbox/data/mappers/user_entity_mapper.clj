@@ -9,14 +9,13 @@
 
     (data->entity [this row]
         (u/->User
-            (:userid row)
             (:username row)
             (:password row)
             (c/to-date-time (:registerdate row))))
 
     (entity->data [this entity]
         (hash-map
-            :username (:username entity)
+            :username (:user-name entity)
             :password (:password entity)
             :registerdate (c/to-sql-time (:register-date entity))))
 )

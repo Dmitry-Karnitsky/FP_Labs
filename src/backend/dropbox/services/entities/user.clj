@@ -1,7 +1,6 @@
 (ns dropbox.services.entities.user)
 
 (defrecord User [
-    id
-    username
+    user-name
     password
     register-date])
