@@ -43,26 +43,36 @@ set @i = 0;
 while @i < 10
 begin
 	declare @sharedTo table (fs int)
+	declare @friendships table (id int)
+	declare @files table(id int)
 
 	select top 1 @id = UserId
 	from Users  
 	order by newid()
 
-	insert into @idsTbl
-	select top 3 UserId
-	from Users 
+	insert into Friendships (UserId, FriendId)
+	select top 5
+		@id, u.UserId
+	from Users u
+	where u.UserId != @id
 	order by newid()
 
-	insert into Friendships(UserId, FriendId)
-	output inserted.FriendshipId into @sharedTo
-	select @id, id
-	from @idsTbl
+	insert into @friendships
+	select top 3 f.FriendshipId
+	from Friendships f
+	where f.UserId = @id
+	order by newid()
+
+	insert into @files
+	select top 5 f.FileId
+	from Files f
+	where f.OwnerId = @id
+	order by newid()
 
 	insert into FilesShares(FileId, FriendshipId)
-	select top 1
-		 (select top 1 fileid from Files where OwnerId = @id)
-		,fs 
-	from @sharedTo
+	select f.id, fr.id
+	from @files f
+	cross join @friendships fr
 
 	set @i = @i + 1
 end
