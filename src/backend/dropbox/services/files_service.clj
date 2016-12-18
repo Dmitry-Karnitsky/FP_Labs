@@ -25,7 +25,7 @@
 			(where ['= :f.OwnerName user-name])
 			(order-by :f.FileName)))))
 
-(defn download
-	[req]
-	(println req))
+(defn get-file
+	[user-name file-id]
+	(println user-name file-id))
 
