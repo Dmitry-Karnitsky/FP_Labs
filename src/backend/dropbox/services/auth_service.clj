@@ -3,10 +3,11 @@
 			[dropbox.config :as conf]
 			[dropbox.data.dsl :as dsl :refer :all]
 			[dropbox.services.users-service :as us]
-            [dropbox.validation :refer [registration-errors]]
-            [ring.util.http-response :as response]
-            [buddy.hashers :as hashers]
-            [clojure.tools.logging :as log]))
+      [dropbox.validation :refer [registration-errors]]
+      [ring.util.http-response :as response]
+      [buddy.hashers :as hashers]
+      [clojure.tools.logging :as log]
+      [dropbox.services.mappers.user-mapper :as mapper]))
 
 (defn decode-auth [encoded]
   (let [auth (second (.split encoded " "))]
@@ -51,7 +52,7 @@
   (if (registration-errors user)
     (response/precondition-failed {:result :error})
     (try
-      (us/create-user user)
+      (us/create-user (mapper/reguser->business user))
       (-> {:result :ok}
           (response/ok)
           (assoc :session (assoc session :identity (:id user))))

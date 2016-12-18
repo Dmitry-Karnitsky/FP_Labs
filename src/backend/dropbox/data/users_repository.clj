@@ -14,13 +14,13 @@
 
 	(get [this user-id]
 		(jdbc/query db-spec
-			["SELECT UserId, Username, Password, RegisterDate FROM Users WHERE UserId = ?", user-id]
-				{:row-fn (fn [data] (.data->entity user-mapper data))
-				:result-set-fn first}))
+			["SELECT UserId, Username, Password, RegisterDate FROM Users WHERE Username = ?", user-id]
+				:row-fn (fn [data] (.data->entity user-mapper data))
+				:result-set-fn first))
 
 	(create [this user]
 		(jdbc/insert! db-spec :Users (.entity->data user-mapper user)))
 
 	(update [this user]
-		(jdbc/update! db-spec :Users (.entity->data user-mapper user) ["UserId = ?" (:id user)]))
+		(jdbc/update! db-spec :Users (.entity->data user-mapper user) ["Username = ?" (:id user)]))
 )

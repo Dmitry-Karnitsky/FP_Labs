@@ -8,7 +8,8 @@
 (defn reguser->business
     [reguser]
     (u/->User
-        (:username reguser)
+        nil
+        (:id reguser)
         (:password (update reguser :password hash/encrypt))
         (h/utc-now)))
 
