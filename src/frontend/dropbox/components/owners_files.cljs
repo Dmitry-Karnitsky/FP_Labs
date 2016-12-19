@@ -28,19 +28,19 @@
       [:td>a.btn {:on-click #(remove-file! (:id row))} "Delete" ]
       [:td>a.btn {:href (str "#/file-properties/" (:id row))} "Properties" ]]))
 
-(defn owners-files [user-id]
-  (.log js/console user-id)
+(defn owners-files []
 	(list-files!)
   (fn [] (when-let [files @files]
-		  [:table.table.table-striped
-			[:thead>tr
-        [:th "Fila name"]
-        [:th "File size"]
-        [:th "Create date"]
-        [:th]
-        [:th]]
-			[:tbody
-				(for [row files]
-					^{:key row}
-          [file-row row])]])))
+     [:div
+        [:table.table.table-striped
+          [:thead>tr
+            [:th "Fila name"]
+            [:th "File size"]
+            [:th "Create date"]
+            [:th]
+            [:th]]
+          [:tbody
+            (for [row files]
+              ^{:key row}
+              [file-row row])]]])))
 

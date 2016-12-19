@@ -10,7 +10,8 @@
             [ajax.core :as ajax]
             [dropbox.components.registration :as reg]
             [dropbox.components.login :as l]
-            [dropbox.components.owners-files :as of])
+            [dropbox.components.owners-files :as of]
+            [dropbox.components.file-properties :as fp])
   (:import goog.History))
 
 (defn nav-link [uri title page collapsed?]
@@ -60,12 +61,21 @@
      [:div.row
       [:div.col-md-12
         (if-let [id (session/get :identity)]
-          [of/owners-files id]
+          [of/owners-files]
           [:h2 "Welcom to Dropbox. Please Login or Register"])]]]))
 
+(defn file-properties-page []
+  (fn []
+    [:div.container
+     [:div.row
+      [:div.col-md-12
+        [fp/file-properties]]]]
+  ))
+
 (def pages
-  {:home    #'home-page
-   :about   #'about-page})
+  {:home               #'home-page
+   :file-properties    #'file-properties-page
+   :about              #'about-page})
 
 (defn modal []
   (when-let [session-modal (session/get :modal)]
@@ -82,6 +92,9 @@
 
 (secretary/defroute "/" []
                     (session/put! :page :home))
+(secretary/defroute "/file-properties/:file-id" [file-id]
+                    (session/put! :file-id file-id)
+                    (session/put! :page :file-properties))
 (secretary/defroute "/about" []
                     (session/put! :page :about))
 
