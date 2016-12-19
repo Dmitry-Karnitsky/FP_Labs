@@ -17,7 +17,7 @@
 	protocol/GenericRepositoryProtocol
 
 	(execute-select [this query]
-		(println (to-sql-params query))
+	(println (to-sql-params query))
 		(jdbc/query db-spec
 			(to-sql-params query)
 				:result-set-fn vec))

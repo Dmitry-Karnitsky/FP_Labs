@@ -180,7 +180,12 @@
 
 ; функция или оператор?
 (defn- function-symbol? [s]
-  (re-matches #"\w+" (name s)))
+  (and
+    (> (count (re-matches #"\w+" (name s))) 1)
+    (not= (s/upper-case (name s)) "LIKE")
+    (not= (s/upper-case (name s)) "AND")
+    (not= (s/upper-case (name s)) "OR")
+    (not= (s/upper-case (name s)) "IS")))
 
 ; форматируем вызов функции или оператора
 (defn render-operator
@@ -188,9 +193,9 @@
   (let [ra (map render-expression args)
         lb (symbol "(")
         rb (symbol ")")]
-    (if (and (function-symbol? op) (not= (op "like")))
+    (if (function-symbol? op)
       ; функция (count, max, ...)
-      [(s/upper-case op) lb (interpose (symbol ",") ra) rb]
+      [op lb (interpose (symbol ",") ra) rb]
       ; оператор (+, *, ...)
       [lb (interpose op (map render-expression args)) rb])))
 
