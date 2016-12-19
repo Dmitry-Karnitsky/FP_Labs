@@ -5,9 +5,11 @@
 
 
 (defn to-date-time [param]
-    (f/parse
-        (f/formatters :date-time)
-        (c/to-string param)))
+    (if (some? param)
+        (f/parse
+            (f/formatters :date-time)
+            (c/to-string param))
+    nil))
 
 
 (defn to-sql-time [param]

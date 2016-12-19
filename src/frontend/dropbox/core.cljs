@@ -60,7 +60,7 @@
      [:div.row
       [:div.col-md-12
         (if-let [id (session/get :identity)]
-          [owners-files id]
+          [of/owners-files id]
           [:h2 "Welcom to Dropbox. Please Login or Register"])]]]))
 
 (def pages
