@@ -49,7 +49,8 @@
         [:a.navbar-brand {:href "#/"} "Dropbox"]
         [:ul.nav.navbar-nav
          [nav-link "#/" "Home" :home collapsed?]
-         [nav-link "#/Shared" "Shared" :about collapsed?]]]
+         [nav-link "#/Shared" "Shared" :about collapsed?]
+				 [nav-link "#/Friends" "Friends" :about collapsed?]]]
        [user-menu]])))
 
 (defn about-page []

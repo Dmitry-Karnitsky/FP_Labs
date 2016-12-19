@@ -27,13 +27,13 @@
        [:div
         [:div.well.well-sm
          [:strong "✱ required field"]]
-        [c/text-input "name" :id "enter a user name" fields]
+        [c/text-input "Name" :id "enter a user name" fields]
         (when-let [error (first (:id @error))]
           [:div.alert.alert-danger error])
-        [c/password-input "password" :password "enter a password" fields]
+        [c/password-input "Password" :password "enter a password" fields]
         (when-let [error (first (:password @error))]
           [:div.alert.alert-danger error])
-        [c/password-input "password" :password-confirm "re-enter the password" fields]
+        [c/password-input "Confirm password" :password-confirm "re-enter the password" fields]
         (when-let [error (:server-error @error)]
           [:div.alert.alert-danger error])]
        [:div

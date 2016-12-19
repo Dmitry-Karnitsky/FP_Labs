@@ -8,5 +8,5 @@
       params
       :id   v/required
       :password [v/required
-             [v/min-count 7 :message "password must contain at least 8 characters"]
+             [v/min-count 7 :message "Password must contain at least 8 characters"]
              [= password-confirm :message "re-entered password does not match"]])))
