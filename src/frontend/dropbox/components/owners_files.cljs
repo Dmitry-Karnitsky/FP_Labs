@@ -7,25 +7,26 @@
 
 (defn list-files! []
   (ajax/GET (str "/files")
-            {:handler
-              #(reset! files %)}))
+    {:handler
+      #(reset! files %)}))
 
-(defn exclude-file-by-id! [fileid]
-  (filter #(not= fileid (:id files))))
+(defn delete-file-by-id [fileid]
+     (swap! files #(remove (fn [file] (= (:id file) fileid)) %)))
 
 (defn remove-file! [fileid]
   (ajax/DELETE (str "/files/" fileid)
-              {:handler
-                #(swap! files (exclude-file-by-id! fileid))}))
+    {:handler
+      #(delete-file-by-id fileid)}))
 
 (defn file-row [row]
   (fn []
     [:tr
-         ^{:key (str (:filename row) (:file-size row) (:create-date row))}
-          [:td (:filename row)]
-          [:td (:file-size row)]
-          [:td (:create-date row)]
-          [:td>a.btn {:on-click #(remove-file! (:id row))} "Delete" ]]))
+      ^{:key (str (:filename row) (:file-size row) (:create-date row))}
+      [:td (:filename row)]
+      [:td (:file-size row)]
+      [:td (:create-date row)]
+      [:td>a.btn {:on-click #(remove-file! (:id row))} "Delete" ]
+      [:td>a.btn {:href (str "#/file-properties/" (:id row))} "Properties" ]]))
 
 (defn owners-files [user-id]
   (.log js/console user-id)
@@ -36,6 +37,7 @@
         [:th "Fila name"]
         [:th "File size"]
         [:th "Create date"]
+        [:th]
         [:th]]
 			[:tbody
 				(for [row files]
