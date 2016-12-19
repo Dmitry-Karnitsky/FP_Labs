@@ -10,7 +10,7 @@
 
 (def fileshare-mapper (m/->FileShareMapper))
 
-(deftype FileShareRepository [db-spec]
+(deftype FileSharesRepository [db-spec]
 	protocol/FileSharesRepositoryProtocol
 
 	(create [this fileshare]

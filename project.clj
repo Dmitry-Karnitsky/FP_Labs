@@ -10,6 +10,7 @@
                  [metosin/ring-http-response "0.6.5"]
                  [bouncer "1.0.0"]
                  [cljsjs/bootstrap "3.3.6-1"]
+                 [cheshire "5.6.3"]
                  [org.webjars/bootstrap "4.0.0-alpha.2"]
                  [org.webjars/font-awesome "4.5.0"]
                  [org.webjars.bower/tether "1.1.1"]
