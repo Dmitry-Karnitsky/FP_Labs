@@ -3,12 +3,14 @@
             [reagent.session :as session]
             [secretary.core :as secretary :include-macros true]
             [goog.events :as events]
+            [cljsjs.bootstrap :as bs]
             [goog.history.EventType :as EventType]
             [markdown.core :refer [md->html]]
             [dropbox.ajax :refer [load-interceptors!]]
             [ajax.core :as ajax]
             [dropbox.components.registration :as reg]
-            [dropbox.components.login :as l])
+            [dropbox.components.login :as l]
+            [dropbox.components.owners-files :as of])
   (:import goog.History))
 
 (defn nav-link [uri title page collapsed?]
@@ -50,32 +52,16 @@
        [user-menu]])))
 
 (defn about-page []
-  [:div "this is the story of picture-gallery... work in progress"])
-
-(defn galleries [gallery-links]
-  [:div.text-xs-center
-   (for [row (partition-all 3 gallery-links)]
-     ^{:key row}
-     [:div.row
-      (for [{:keys [owner name]} row]
-        ^{:key (str owner name)}
-        [:div.col-sm-4
-         [:a {:href (str "#/gallery/" owner)}
-          [:img {:src (str js/context "/gallery/" owner "/" name)}]]])])])
-
-(defn list-galleries! []
-  (ajax/GET "/list-galleries"
-            {:handler #(session/put! :gallery-links %)}))
+  [:div "Dropbox about"])
 
 (defn home-page []
-  (list-galleries!)
   (fn []
     [:div.container
      [:div.row
-      [:div.col-md-12>h2 "Available Galleries"]]
-     (when-let [gallery-links (session/get :gallery-links)]
-       [:div.row>div.col-md-12
-        [galleries gallery-links]])]))
+      [:div.col-md-12
+        (if-let [id (session/get :identity)]
+          [of/owners-files id]
+          [:h2 "Welcom to Dropbox. Please Login or Register"])]]]))
 
 (def pages
   {:home    #'home-page

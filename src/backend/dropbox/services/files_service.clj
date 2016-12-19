@@ -22,7 +22,7 @@
 				:FileId :f.FileId
 				:FileName :f.FileName
 				:FileSize (LEN :f.FileBytes)
-				:CreateDate :f.CreateDate
+				;;:CreateDate :f.CreateDate
 				:OwnerName :f.OwnerName})
 			(from :f :Files)
 			(where ['= :f.OwnerName user-name])

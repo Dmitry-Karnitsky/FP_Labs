@@ -5,10 +5,10 @@
 
 
 (defn to-date-time [param]
-    (if (not (nil? param))
-    (f/parse
-        (f/formatters :date-time)
-        (c/to-string param))
+    (if (some? param)
+        (f/parse
+            (f/formatters :date-time)
+            (c/to-string param))
     nil))
 
 
